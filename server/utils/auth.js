@@ -5,6 +5,12 @@ const { AuthenticationError } = require('apollo-server-express');
 const secret = 'mysecretsshhhhh';
 const expiration = '2h';
 
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: authMiddleware
+});
+
 const authMiddleware = ({ req }) => {
   // allows token to be sent via req.query or headers
 
