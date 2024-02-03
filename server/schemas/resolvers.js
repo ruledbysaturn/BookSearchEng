@@ -36,7 +36,7 @@ const resolvers = {
 
         saveBook: async (parent, args, context) => {
             if (context.user) {
-                const book = await Book.create(args.iput);
+                const book = await Book.create(args.input);
 
                 const updatedUser = await User.findByIdAndUpdate(
                     { _id: context.user._id },
