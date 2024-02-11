@@ -32,13 +32,10 @@ const SignupForm = () => {
       });
 
 
-      const { token, user } = data.addUser;
-
-      Auth.login(token);
+      Auth.login(data.addUser.token);
 
     } catch (err) {
-      console.log('error occured', err);
-      console.error(err, 'error');
+      console.error(err);
       setShowAlert(true);
     }
 
