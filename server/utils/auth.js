@@ -1,15 +1,12 @@
 const jwt = require('jsonwebtoken');
-const { AuthenticationError } = require('apollo-server-express');
+const { ApolloServer, AuthenticationError } = require('apollo-server-express');
+
+const typeDefs = require('../schemas/typeDefs');
+const resolvers = require('../schemas/resolvers');
 
 // set token secret and expiration date
 const secret = 'mysecretsshhhhh';
 const expiration = '2h';
-
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  context: authMiddleware
-});
 
 const authMiddleware = ({ req }) => {
   // allows token to be sent via req.query or headers
@@ -34,9 +31,15 @@ const authMiddleware = ({ req }) => {
   }
  };
 
+ const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: authMiddleware
+});
+
  const signToken = ({ username, email, _id }) => {
   const payload = { username, email, _id };
   return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
 };
 
-module.exports = { authMiddleware, signToken };
+module.exports = { authMiddleware, signToken, server };

@@ -19,6 +19,9 @@ const server = new ApolloServer({
   context: authMiddleware
 });
 
+async function startServer() {
+  await server.start();
+
 server.applyMiddleware({ app, path: '/graphql' });
 
 // if we're in production, serve client/build as static assets
@@ -31,3 +34,6 @@ app.use(routes);
 db.once('open', () => {
   app.listen(PORT, () => console.log(`🌍 Now listening on localhost:${PORT}`));
 });
+}
+
+startServer();
